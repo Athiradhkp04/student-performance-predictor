@@ -1,0 +1,18 @@
+# Student Performance Predictor (Extended)
+
+A Python-based data science project predicting student performance using attendance, internal marks, assignments, and peer support levels.  
+
+### ✨ Features
+- Predicts performance categories (High / Average / Low)
+- Incorporates a Peer Support metric (1–10) to analyze motivation
+- Generates correlation analysis and visual graphs
+- Built with Python, Pandas, Scikit-learn, and Matplotlib
+
+### 📂 Files
+- `student_performance_predictor_extended.py` — main code  
+- `student_data_extended.csv` — dataset with 300 records  
+
+### 🚀 Run the Project
+```bash
+pip install pandas scikit-learn matplotlib
+python student_performance_predictor_extended.py
