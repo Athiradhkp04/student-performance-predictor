@@ -1,18 +1,110 @@
-# Student Performance Predictor (Extended)
+Student Performance Predictor – Real Dataset (Universal ML Framework)
 
-A Python-based data science project predicting student performance using attendance, internal marks, assignments, and peer support levels.  
+This project focuses on analyzing and predicting student academic performance using real educational data.
+It uses a Decision Tree model and is designed as a universal framework that can adapt to any structured dataset with minimal modification.
 
-### ✨ Features
-- Predicts performance categories (High / Average / Low)
-- Incorporates a Peer Support metric (1–10) to analyze motivation
-- Generates correlation analysis and visual graphs
-- Built with Python, Pandas, Scikit-learn, and Matplotlib
+Purpose and Background
 
-### 📂 Files
-- `student_performance_predictor_extended.py` — main code  
-- `student_data_extended.csv` — dataset with 300 records  
+This project was developed primarily for my own understanding and exploration of machine learning applications in educational data analysis.
+As my final-year research work (along with my team) focuses on the effect of peer support on motivation in blended learning, this model serves as a personal experimental base to understand how behavioral and engagement-based indicators can be represented and analyzed through data.
 
-### 🚀 Run the Project
-```bash
-pip install pandas scikit-learn matplotlib
-python student_performance_predictor_extended.py
+The goal was not to produce a finalized system, but to build a working structure that can later help our team in implementing and refining predictive models related to our research dataset.
+It helped me gain a clearer understanding of data preprocessing, feature encoding, and explainable modeling, which will be directly useful when we begin model design for our actual research data.
+
+Overview
+
+The model was built using the xAPI-Edu-Data dataset from Kaggle, which contains student demographics, learning behavior, and performance metrics.
+It automates data preprocessing, encoding, model training, evaluation, and visualization, while remaining flexible enough to be reused across different educational datasets.
+
+Features
+
+Works with any structured CSV dataset
+
+Automatically encodes categorical variables
+
+Normalizes numeric data for consistent learning
+
+Generates accuracy, confusion matrix, and classification report
+
+Produces correlation and decision-tree visualizations
+
+Useful for research, analysis, and academic applications
+
+Dataset Information
+
+Source: xAPI-Edu-Data (Kaggle)
+
+Records: Around 480 student entries
+Attributes: Demographic, academic, behavioral, and survey-based factors
+
+Main features include:
+
+raisedhands, visitedresources, announcementsviewed, Discussion – indicators of engagement
+
+ParentAnsweringSurvey, ParentschoolSatisfaction – social and parental support variables
+
+StudentAbsenceDays, Gender, StageID, Class – academic and demographic identifiers
+
+Target variable: Class (student performance category)
+
+How to Run
+
+Install the required libraries:
+
+pip install pandas numpy scikit-learn matplotlib seaborn
+
+
+Place your dataset (for example xAPI-Edu-Data.csv) and the script in the same folder.
+
+Run the program:
+
+python student_performance_universal.py
+
+
+When prompted:
+
+Enter dataset filename (with .csv): xAPI-Edu-Data.csv
+Enter the target column name (the one to predict): Class
+
+
+The output includes:
+
+Model accuracy
+
+Confusion matrix and classification report
+
+Feature importance plot
+
+Correlation heatmap
+
+Decision Tree visualization
+
+Results Summary
+Metric	Observation
+Accuracy	Around 77%–83%, depending on data split
+Strong Predictors	Raised Hands, Visited Resources, Announcements Viewed
+Key Insight	Consistent engagement and participation showed a stronger link to performance than demographic factors
+
+These findings align with the broader research idea that collaborative and participatory behaviors can positively influence motivation and performance in blended learning settings.
+
+Project Structure
+├── student_performance_universal.py   # Main Python script
+├── xAPI-Edu-Data.csv                  # Dataset
+├── README.md                          # Documentation
+└── results/                           # (Optional) contains visuals and charts
+
+Future Improvements
+
+Add regression mode for continuous performance prediction
+
+Automate PDF report generation for results
+
+Integrate peer-network influence analysis
+
+Build a simple Streamlit-based dashboard for interactive exploration
+
+Author
+
+Name: Athiradh K P
+Course: BCA (Data Science), Amrita Vishwa Vidyapeetham
+Research Focus: The influence of peer support on motivation in blended learning environments.
