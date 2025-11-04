@@ -1,64 +1,76 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
-from sklearn.ensemble import DecisionTreeClassifier
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-# STEP 1: Load Extended Dataset
+# Load dataset
 
-data = pd.read_csv("student_data_extended.csv")
+file_path = input("Enter dataset filename (with .csv): ")
+target_col = input("Enter the target column name (the one to predict): ")
 
-# STEP 2: Encode Target Column
+data = pd.read_csv(file_path)
 
-le = LabelEncoder()
-data["Final Grade Encoded"] = le.fit_transform(data["Final Grade"])
+print("\n✅ Dataset loaded successfully!")
+print(f"Shape: {data.shape}")
+print(f"Columns: {list(data.columns)}\n")
 
+#  Basic cleaning
+# -----------------------------
+# Drop rows with missing target
+data = data.dropna(subset=[target_col])
 
-# STEP 3: Prepare Features and Target
+# Handle categorical encoding
+label_encoders = {}
+for col in data.columns:
+    if data[col].dtype == 'object':
+        le = LabelEncoder()
+        data[col] = le.fit_transform(data[col].astype(str))
+        label_encoders[col] = le
 
-X = data[["Attendance (%)", "Internal Marks", "Assignment Score", "Peer Support Score"]]
-y = data["Final Grade Encoded"]
+# Step 3: Prepare features and target
+X = data.drop(columns=[target_col])
+y = data[target_col]
+
+# Scale numeric features
+scaler = StandardScaler()
+X = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
-# STEP 4: Model Training
-
-model = DecisionTreeClassifier(random_state=42, max_depth=5)
+# Step 4: Train model
+model = RandomForestClassifier(random_state=42, n_estimators=100)
 model.fit(X_train, y_train)
 
-# STEP 5: Predictions and Evaluation
-
+# Step 5: Evaluate
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
-print(f"Model Accuracy: {accuracy:.2f}")
-print("\nConfusion Matrix:")
+print(f"\n🎯 Model Accuracy: {accuracy:.2f}\n")
+print("Confusion Matrix:")
 print(confusion_matrix(y_test, y_pred))
 print("\nClassification Report:")
-print(classification_report(y_test, y_pred, target_names=le.classes_))
+print(classification_report(y_test, y_pred))
 
+# Step 6: Feature Importance
+importances = model.feature_importances_
+feat_imp = pd.Series(importances, index=X.columns).sort_values(ascending=False)
 
-# STEP 6: Visual Analysis
-
-plt.figure(figsize=(7,5))
-plt.scatter(
-    data["Peer Support Score"],
-    data["Internal Marks"],
-    c=data["Final Grade Encoded"],
-    cmap="plasma",
-    s=70,
-    edgecolor="k",
-    alpha=0.8
-)
-plt.xlabel("Peer Support Score (1–10)")
-plt.ylabel("Internal Marks")
-plt.title("Effect of Peer Support on Student Performance")
-plt.colorbar(label="Performance Level (Encoded)")
+plt.figure(figsize=(8,5))
+sns.barplot(x=feat_imp, y=feat_imp.index)
+plt.title("Feature Importance")
+plt.xlabel("Importance Score")
+plt.ylabel("Features")
 plt.show()
 
 
-# STEP 7: Correlation Matrix
+# Step 7: Correlation Heatmap
+plt.figure(figsize=(8,6))
+sns.heatmap(data.corr(), annot=False, cmap='coolwarm', linewidths=0.5)
+plt.title("Correlation Heatmap")
+plt.show()
 
-print("\nCorrelation Matrix:")
-print(data[["Attendance (%)", "Internal Marks", "Assignment Score", "Peer Support Score"]].corr())
+print("\n✅ Analysis completed successfully.")
