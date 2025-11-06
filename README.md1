@@ -87,11 +87,6 @@ Key Insight	Consistent engagement and participation showed a stronger link to pe
 
 These findings align with the broader research idea that collaborative and participatory behaviors can positively influence motivation and performance in blended learning settings.
 
-Project Structure
-├── student_performance_universal.py   # Main Python script
-├── xAPI-Edu-Data.csv                  # Dataset
-├── README.md                          # Documentation
-└── results/                           # (Optional) contains visuals and charts
 
 Future Improvements
 
